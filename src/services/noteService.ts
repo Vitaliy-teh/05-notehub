@@ -25,18 +25,18 @@ export const fetchNotes = async ({
   const params: Record<string, unknown> = { page, perPage };
   if (search) params.search = search;
 
-  const { data } = await axios.get(`${API_BASE}/notes`, { params });
+  const { data } = await axios.get<FetchNotesResponse>(`${API_BASE}/notes`, { params });
   return data;
 };
 
 export const createNote = async (
-  note: Omit<Note, "id" | "createdAt">,
+  note: Omit<Note, "id" | "createdAt" | "updatedAt">
 ): Promise<Note> => {
-  const { data } = await axios.post(`${API_BASE}/notes`, note);
+  const { data } = await axios.post<Note>(`${API_BASE}/notes`, note);
   return data;
 };
 
 export const deleteNote = async (id: string): Promise<Note> => {
-  const { data } = await axios.delete(`${API_BASE}/notes/${id}`);
+  const { data } = await axios.delete<Note>(`${API_BASE}/notes/${id}`);
   return data;
 };
